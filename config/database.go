@@ -12,6 +12,11 @@ func init() {
 
 		// Database connections
 		"connections": map[string]any{
+			"mongodb": map[string]any{
+				"driver":   "mongodb",
+				"url":      config.Env("MONGODB_URL", "127.0.0.1"),
+				"database": config.Env("MONGODB_DATABASE", "goravel"),
+			},
 			"mysql": map[string]any{
 				"driver":   "mysql",
 				"host":     config.Env("DB_HOST", "127.0.0.1"),

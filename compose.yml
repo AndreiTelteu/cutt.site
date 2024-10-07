@@ -18,7 +18,11 @@ services:
         GROUP_ID: $GROUP_ID
     restart: unless-stopped
     environment:
-      MONGODB_URL: mongodb://cuttuser:secret@mongo:27017/
+      APP_HOST: 0.0.0.0
+      APP_PORT: 3000
+      APP_URL: http://localhost:3023
+      MONGODB_URL: mongodb://cuttuser:secret@mongo:27017/?maxPoolSize=20
+      MONGODB_DATABASE: cutt
     volumes:
       - ./:/app
       - go-cache:/go-cache
@@ -32,6 +36,8 @@ services:
       MONGO_INITDB_DATABASE: cutt
     volumes:
       - mongodb_data:/data/db
+    ports:
+      - "27027:27017"
   
   redis:
     image: "docker.dragonflydb.io/dragonflydb/dragonfly"

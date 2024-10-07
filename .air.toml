@@ -6,6 +6,7 @@ tmp_dir = "storage/temp"
   cmd = "swag fmt && swag init -q --output ./app/swagger && go build -o ./storage/temp/main ."
   delay = 1000
   exclude_dir = [
+    "frontend",
     "storage",
     "database",
     "app/swagger",
