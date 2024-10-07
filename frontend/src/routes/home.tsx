@@ -1,12 +1,14 @@
 import { Title } from "@solidjs/meta";
-import Counter from "~/components/Counter";
+import { Button } from "~/components/Button";
 
 export default function Home() {
   return (
     <main>
       <Title>Hello World</Title>
       <h1>Hello world!</h1>
-      <Counter />
+      <Button>
+        dsd
+      </Button>
       <p>
         Visit{" "}
         <a href="https://start.solidjs.com" target="_blank">

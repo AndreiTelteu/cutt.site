@@ -1,6 +1,5 @@
 import { defineConfig, ViteCustomizableConfig } from "@solidjs/start/config";
-import type { HmrOptions, PluginOption } from "vite";
-import solidStyled from "vite-plugin-solid-styled";
+import type { HmrOptions } from "vite";
 
 export default defineConfig({
   
@@ -11,7 +10,7 @@ export default defineConfig({
       
       resolve: {
         alias: {
-          "@": "/src",
+          "~": "/src",
         },
       },
       
@@ -22,12 +21,6 @@ export default defineConfig({
       },
       
       plugins: [
-        solidStyled({
-          filter: {
-            include: "src/**/*.tsx",
-            exclude: "node_modules/**/*.{ts,js}"
-          }
-        }) as PluginOption
       ],
       
     };
