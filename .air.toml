@@ -3,9 +3,13 @@ tmp_dir = "storage/temp"
 
 [build]
   bin = "./storage/temp/main"
-  cmd = "go build -o ./storage/temp/main ."
+  cmd = "swag fmt && swag init -q --output ./app/swagger && go build -o ./storage/temp/main ."
   delay = 1000
-  exclude_dir = ["storage", "database"]
+  exclude_dir = [
+    "storage",
+    "database",
+    "app/swagger",
+  ]
   exclude_file = []
   exclude_regex = []
   exclude_unchanged = false
@@ -17,6 +21,8 @@ tmp_dir = "storage/temp"
   log = "build-errors.log"
   send_interrupt = false
   stop_on_error = true
+  rerun = true
+  rerun_delay = 500
 
 [color]
   app = ""

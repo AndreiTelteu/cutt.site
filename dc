@@ -1,0 +1,52 @@
+#!/bin/bash
+trap "exit" 0
+set -e
+export USER_ID=$(id -u)
+export GROUP_ID=$(id -g)
+
+DC="docker compose" # local dev
+DCPROD="docker compose -f compose.yml -f compose.prod.yml" # production
+
+if [ $# -eq 0 ]; then
+    $DC ps -a
+    
+elif [ $1 == "up" ]; then
+    $DC up -d
+    
+elif [ $1 == "go" ]; then
+    if [ $# -gt 1 ]; then
+        $DC exec go sh -c "${*:2}"
+    else
+        $DC exec go bash
+    fi
+    
+elif [ $1 == "front" ]; then
+    if [ $# -gt 1 ]; then
+        $DC exec frontend sh -c "${*:2}"
+    else
+        $DC exec frontend bash
+    fi
+    
+elif [ $1 == "a" ]; then
+    $DC exec go sh -c "go run . artisan ${*:2}"
+    
+elif [ $1 == "seed" ]; then
+    $DC exec go sh -c "APP_DEBUG=false go run . artisan db:seed"
+    
+elif [ $1 == "docs" ]; then
+    $DC exec go sh -c "swag fmt; swag init --output ./app/swagger"
+    
+elif [ $1 == "recreate" ]; then
+    $DC up -d --force-recreate ${*:2}
+    
+elif [ $1 == "build" ]; then
+    $DC up -d --force-recreate --build ${*:2}
+    
+elif [ $1 == "release" ]; then
+    git pull
+    $DCPROD up -d --force-recreate nginx go client admin appmobile seller
+    # ./dc freshprod
+    
+else
+    $DC $*
+fi
